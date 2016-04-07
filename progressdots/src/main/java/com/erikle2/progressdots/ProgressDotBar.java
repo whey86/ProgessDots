@@ -1,8 +1,11 @@
 package com.erikle2.progressdots;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
@@ -12,9 +15,11 @@ import android.view.View;
 public class ProgressDotBar extends View {
 
     private ProgressDot [] mDots;
-    protected int mSize;
-    protected int mRadius;
-    protected int mColor1,mColor2;
+
+    private int mSize;
+    private int mRadius;
+    private int mColor1,mColor2;
+
     private int indexPointer = 0;
     private int indexIncrease = 6;
     private Paint mPaintLineUndone;
@@ -23,19 +28,31 @@ public class ProgressDotBar extends View {
     /**
      * Constructor
      * @param context
-     * @param size
-     * @param radius
-     * @param colorDone
-     * @param colorUndone
+     * @param attrs
      */
-    public ProgressDotBar(Context context, int size, int radius, int colorDone, int colorUndone) {
-        super(context);
-        setVisibility(View.VISIBLE);
+    public ProgressDotBar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+//        setVisibility(View.VISIBLE);
 
-        mSize = size;
-        mRadius = radius;
-        mColor1 = colorDone;
-        mColor2 = colorUndone;
+//        mSize = size;
+//        mRadius = radius;
+//        mColor1 = colorDone;
+//        mColor2 = colorUndone;
+//
+
+        init(attrs);
+        initDots();
+    }
+
+    private void init(AttributeSet attrs) {
+        TypedArray a = this.getContext().obtainStyledAttributes(attrs,R.styleable.ProgressDotBar );
+//
+        mSize = a.getInt(R.styleable.ProgressDotBar_pdSize,5);
+        mColor1 = a.getColor(R.styleable.ProgressDotBar_colorDone, Color.GREEN);
+        mColor2 = a.getColor(R.styleable.ProgressDotBar_colorUndone, Color.GRAY);
+        mRadius = a.getInt(R.styleable.ProgressDotBar_pdRadius,20);
+
+        a.recycle();
 
         mPaintLineUndone = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintLineUndone.setStyle(Paint.Style.FILL.STROKE);
@@ -46,7 +63,6 @@ public class ProgressDotBar extends View {
         mPaintLineDone.setStyle(Paint.Style.FILL.STROKE);
         mPaintLineDone.setStrokeWidth(mRadius / 4);
         mPaintLineDone.setColor(mColor1);
-        initDots();
     }
 
     /**
@@ -56,9 +72,11 @@ public class ProgressDotBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
-
         //Draw line under uncompleted steps
-        canvas.drawLine((float)(mRadius*2+(indexPointer*mRadius*3)),(float)(mRadius*2),(float)mRadius*2 + mRadius*(mSize) * 3,(float)(mRadius * 2),mPaintLineUndone);
+        canvas.drawLine((float)(mRadius*2+(indexPointer*mRadius*3)),
+                (float)(mRadius*2),
+                (float)mRadius*2 + mRadius*(mSize) * 3,
+                (float)(mRadius * 2),mPaintLineUndone);
         //Draw line under completed steps
         canvas.drawLine((float)(mRadius*2),(float)(mRadius*2),(float)mRadius*2 + mRadius +(indexPointer) * mRadius*3,(float)(mRadius * 2),mPaintLineDone);
 

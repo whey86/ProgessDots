@@ -1,8 +1,10 @@
 package com.erikle2.mylibrary;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,13 +12,16 @@ import android.widget.TextView;
 import com.erikle2.progressdots.ProgressDot;
 import com.erikle2.progressdots.ProgressDotBar;
 
+import java.util.zip.Inflater;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProgressDotBar bar = new ProgressDotBar(this,3,20,Color.BLUE,Color.GRAY);
-        setContentView(bar);
 
+        setContentView(R.layout.activity_main);
     }
+
+
 }

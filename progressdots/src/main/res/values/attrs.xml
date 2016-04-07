@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressDotBar">
+        <attr name="pdRadius" format="integer" />
+        <attr name="colorDone" format="color" />
+        <attr name="colorUndone" format="color" />
+        <attr name="pdSize" format="integer" />
+    </declare-styleable>
+</resources>
