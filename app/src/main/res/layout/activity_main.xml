@@ -10,12 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.erikle2.mylibrary.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
     <com.erikle2.progressdots.ProgressDotBar
+        android:id="@+id/progbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:pdSize="3"

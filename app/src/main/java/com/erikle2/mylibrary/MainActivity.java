@@ -16,11 +16,14 @@ import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
+    ProgressDotBar bar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        bar = (ProgressDotBar)findViewById(R.id.progbar);
+        bar.next();
+        bar.next();
     }
 
 
