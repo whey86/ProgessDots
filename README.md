@@ -26,14 +26,20 @@ Progressdots is a small android library to visualize the progress in a step prog
         custom:colorUndone="@android:color/darker_gray"/>
 
 Attributes are opional but at least pdSize should be set or else default values will be used. The view have 4 custom attributes:
+
 1. pdSize -> Number of steps(dots)
+
 2. pdRadius -> Radius of the dots
+
 3. colorDone -> Color of a finished step
+
 4. colorUndone -> Color of a non finished step
 
 ##### 2. Update ProgressDots:
 ProgressDots have two methods to update the ProgressDotsBar:
+
 1. next(); -> Move to next step
+
 2. back(); -> Move back to previous step
 
 
