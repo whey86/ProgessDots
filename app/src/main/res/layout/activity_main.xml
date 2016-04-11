@@ -14,7 +14,7 @@
         android:id="@+id/progbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:pdSize="3"
+        custom:pdSize="4"
         custom:pdRadius="20"
         custom:colorDone="@color/colorAccent"
         custom:colorUndone="@android:color/darker_gray"/>

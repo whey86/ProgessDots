@@ -22,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bar = (ProgressDotBar)findViewById(R.id.progbar);
-        bar.next();
-        bar.next();
+        bar.setIndex(4);
     }
 
 
