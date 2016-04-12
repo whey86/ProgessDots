@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 
 /**
@@ -15,7 +16,11 @@ import android.view.View;
 public class ProgressDotBar extends View {
 
     private ProgressDot[] mDots;
-
+    private boolean firstDraw = true;
+    private int mWidth;
+    private int maxDotsize;
+    private boolean autoSize;
+    private int centerPadding;
     private int mSize;
     private int mRadius;
     private int mColor1, mColor2;
@@ -33,21 +38,18 @@ public class ProgressDotBar extends View {
      */
     public ProgressDotBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        setVisibility(View.VISIBLE);
-
-//        mSize = size;
-//        mRadius = radius;
-//        mColor1 = colorDone;
-//        mColor2 = colorUndone;
-//
-
         init(attrs);
-        initDots();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
     }
 
     private void init(AttributeSet attrs) {
         TypedArray a = this.getContext().obtainStyledAttributes(attrs, R.styleable.ProgressDotBar);
-//
+
+        autoSize = a.getBoolean(R.styleable.ProgressDotBar_pdAutoSizeDots, false);
         mSize = a.getInt(R.styleable.ProgressDotBar_pdSize, 5);
         mColor1 = a.getColor(R.styleable.ProgressDotBar_colorDone, Color.GREEN);
         mColor2 = a.getColor(R.styleable.ProgressDotBar_colorUndone, Color.GRAY);
@@ -71,19 +73,34 @@ public class ProgressDotBar extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+        if(firstDraw){
 
+            mWidth = canvas.getWidth();
+            int mHeight = canvas.getHeight();
+            maxDotsize = (mWidth/mSize) /4;
+            if(maxDotsize > mHeight/4 ){
+                maxDotsize = mHeight/4;
+            }
+            mRadius = maxDotsize;
+
+            centerPadding  = (mWidth - mRadius * 4 * mSize) / 2;
+
+            initDots();
+            firstDraw = false;
+        }
+        updateDots();
         //Draw line under uncompleted steps
-        canvas.drawLine((float) mRadius,
+        canvas.drawLine((float) centerPadding + mRadius,
                 (float) (mRadius * 2),
-                (float)  (mSize - 1) * mRadius * 4 + mRadius,
+                (float) centerPadding + (mSize - 1) * mRadius * 4 + mRadius,
                 (float) (mRadius * 2),
                 mPaintLineUndone);
 
         //Draw line under completed steps
-        int lineEnd = indexPointer >= (mSize) ? mSize-1 : indexPointer;
-        canvas.drawLine((float) (mRadius),
+        int lineEnd = indexPointer >= (mSize) ? mSize - 1 : indexPointer;
+        canvas.drawLine((float) centerPadding + (mRadius),
                 (float) (mRadius * 2),
-                (float)  (lineEnd+1) * mRadius * 4- mRadius,
+                (float) centerPadding + (lineEnd + 1) * mRadius * 4 - mRadius,
                 (float) (mRadius * 2),
                 mPaintLineDone);
 
@@ -109,7 +126,6 @@ public class ProgressDotBar extends View {
      * Initiates Progressdots
      */
     private void initDots() {
-
         mDots = new ProgressDot[mSize];
 
         //Create all dots
@@ -145,7 +161,7 @@ public class ProgressDotBar extends View {
             mDots[indexPointer].setRadius(mRadius + indexIncrease);
             mDots[indexPointer].setBounds(dotSpace - indexIncrease, mRadius - indexIncrease, dotSpace + mRadius * 2 + indexIncrease, mRadius * 3 + indexIncrease);
         }
-        }
+    }
 
 
     /**
@@ -158,7 +174,7 @@ public class ProgressDotBar extends View {
      * @return
      */
     private int calculateDotspace(int mRadius, int index) {
-        return mRadius + mRadius * index * 4;
+        return centerPadding + mRadius + mRadius * index * 4;
     }
 
     /**
@@ -166,7 +182,7 @@ public class ProgressDotBar extends View {
      */
     public void next() {
         indexPointer++;
-        updateDots();
+        invalidate();
     }
 
     /**
@@ -184,7 +200,7 @@ public class ProgressDotBar extends View {
     public void setIndex(int i) {
         if (i >= 0) {
             indexPointer = i;
-            updateDots();
+            invalidate();
         } else {
             Log.d("ProgressDotBar", "Index overflow");
         }

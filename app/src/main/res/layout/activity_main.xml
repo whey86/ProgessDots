@@ -12,7 +12,7 @@
 
     <com.erikle2.progressdots.ProgressDotBar
         android:id="@+id/progbar"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         custom:pdSize="4"
         custom:pdRadius="20"
