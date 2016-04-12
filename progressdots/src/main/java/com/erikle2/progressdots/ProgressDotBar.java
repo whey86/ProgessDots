@@ -76,10 +76,12 @@ public class ProgressDotBar extends View {
         if(firstDraw){
 
             mWidth = canvas.getWidth();
-            int mHeight = canvas.getHeight();
-            maxDotsize = (mWidth/mSize) /4;
-            if(maxDotsize > mHeight/4 ){
-                maxDotsize = mHeight/4;
+            if(autoSize) {
+                int mHeight = canvas.getHeight();
+                maxDotsize = (mWidth / mSize) / 4;
+                if (maxDotsize > mHeight / 4) {
+                    maxDotsize = mHeight / 4;
+                }
             }
             mRadius = maxDotsize;
 
