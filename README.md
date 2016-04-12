@@ -20,6 +20,7 @@ Progressdots is a small android library to visualize the progress in a step prog
 ##### 2. Add view to XML, example:
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        custom:pdAutoSizeDots = "false"
         custom:pdSize="3"
         custom:pdRadius="20"
         custom:colorDone="@color/colorAccent"
@@ -27,13 +28,15 @@ Progressdots is a small android library to visualize the progress in a step prog
 
 Attributes are opional but at least pdSize should be set or else default values will be used. The view have 4 custom attributes:
 
-1. pdSize -> Number of steps(dots)
+1. pdSize(integer) default value:5-> Number of steps(dots)
 
-2. pdRadius -> Radius of the dots
+2. pdRadius(integer) default value:20 -> Radius of the dots
 
-3. colorDone -> Color of a finished step
+3. colorDone(Color) default value:Android.Color.Green -> Color of a finished step
 
-4. colorUndone -> Color of a non finished step
+4. colorUndone(Color) default value:Android.Color.Grey -> Color of a non finished step
+
+5. pdAutoSizeDots(boolean) default value:false - > Whatever dots show autosize relative to the view size or not; 
 
 ##### 2. Update ProgressDots:
 ProgressDots have two methods to update the ProgressDotsBar:
@@ -42,4 +45,7 @@ ProgressDots have two methods to update the ProgressDotsBar:
 
 2. back(); -> Move back to previous step
 
+3. setIndex(int i); -> Move to specific index
+
+if current index overflows maximum size the progressbar will indicate all steps complete.
 
